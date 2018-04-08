@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #ebebeb;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="666.0" fitWidth="1162.0" layoutX="-69.0" layoutY="67.0" opacity="0.21" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Img/bg.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutY="713.0" prefHeight="55.0" prefWidth="1024.0" style="-fx-background-color: #262A30;">
+         <children>
+            <Label layoutX="19.0" layoutY="17.0" text="Signed as :" textFill="#bbbbbb">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="account" layoutX="94.0" layoutY="17.0" text="example@example.com" textFill="#bbbbbb">
+               <font>
+                  <Font name="System Bold Italic" size="14.0" />
+               </font>
+            </Label>
+            <JFXButton layoutX="845.0" layoutY="13.0" prefHeight="30.0" prefWidth="157.0" style="-fx-background-color: #2E58A1;" text="Log Out" textFill="#bbbbbb">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </JFXButton>
+         </children></AnchorPane>
+      <AnchorPane prefHeight="67.0" prefWidth="1024.0" style="-fx-background-color: #D46A2E;">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" text="E-" textFill="#2a6cdd">
+               <font>
+                  <Font name="System Bold" size="28.0" />
+               </font>
+            </Label>
+            <Label layoutX="41.0" layoutY="14.0" text="vote" textFill="#ebebeb">
+               <font>
+                  <Font name="System Bold" size="28.0" />
+               </font>
+            </Label>
+            <Label layoutX="865.0" layoutY="18.0" text="Next Day &gt;&gt;" textFill="#ebebeb">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="482.0" layoutY="18.0" text="Day: 1" textFill="#ebebeb">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="259.0" layoutY="193.0" opacity="0.5" prefHeight="67.0" prefWidth="506.0" style="-fx-background-color: #2B5296; -fx-border-radius: 5%;">
+         <children>
+            <Label layoutX="129.0" layoutY="9.0" text="Voting name example" textFill="#bebebe">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="184.0" layoutY="43.0" text="Avaliable only on days 2-3" textFill="#bbbbbb">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="259.0" layoutY="280.0" prefHeight="67.0" prefWidth="506.0" style="-fx-background-color: #2B5296; -fx-border-radius: 5%;">
+         <children>
+            <Label layoutX="129.0" layoutY="16.0" text="Voting name example" textFill="#bebebe">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="259.0" layoutY="367.0" prefHeight="67.0" prefWidth="506.0" style="-fx-background-color: #2B5296; -fx-border-radius: 5%;">
+         <children>
+            <Label layoutX="129.0" layoutY="16.0" text="Voting name example" textFill="#bebebe">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="259.0" layoutY="447.0" opacity="0.5" prefHeight="67.0" prefWidth="506.0" style="-fx-background-color: #2B5296; -fx-border-radius: 5%;">
+         <children>
+            <Label layoutX="129.0" layoutY="9.0" text="Voting name example" textFill="#bebebe">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="184.0" layoutY="43.0" text="Avaliable only on days 5-7" textFill="#bbbbbb">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <JFXButton layoutX="316.0" layoutY="556.0" prefHeight="40.0" prefWidth="157.0" style="-fx-background-color: #D46A2E;" text="&lt;&lt;" textFill="#ebebeb">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="551.0" layoutY="555.0" prefHeight="40.0" prefWidth="157.0" style="-fx-background-color: #D46A2E;" text="&gt;&gt;" textFill="#ebebeb">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>
