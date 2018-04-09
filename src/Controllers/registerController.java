@@ -15,8 +15,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class registerController {
 
@@ -26,12 +24,12 @@ public class registerController {
     @FXML JFXCheckBox accept;
     @FXML JFXButton signUpButton;
 
-    private userDatabase database;
+    private UserDatabase database;
     private String username;
     private String password;
     private String confirmPassword;
 
-    public registerController(userDatabase database){
+    public registerController(UserDatabase database){
         this.database = database;
     }
 
@@ -131,7 +129,7 @@ public class registerController {
             return false;
         }
 
-        else if (!((accept.isIndeterminate() == false ) && (accept.isPressed() == false ))) {
+        else if (((accept.isIndeterminate() == false) && (accept.isPressed()==false))) {   //TODO
             Warning.showAlert("You must accept Terms & Conditions");
             return false;
         }

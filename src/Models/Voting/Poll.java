@@ -11,13 +11,20 @@ public class Poll {
     private String[] choices = new String[2];
     private double[] stats = new double[2];
 
-    public void setType(String type){
+
+    public Poll(String type,String question, String choice1,String choice2) {
+        setType(type);
+        setQuestion(question);
+        setChoices(choice1,choice2);
+    }
+
+    private void setType(String type){
         this.type = type;
     }
-    public void setQuestion(String question){
+    private void setQuestion(String question){
         this.question = question;
     }
-    public void setChoices(String choice1,String choice2){
+    private void setChoices(String choice1,String choice2){
         choices[0] = choice1;
         choices[1] = choice2;
     }

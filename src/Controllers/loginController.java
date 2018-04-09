@@ -8,7 +8,6 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -31,7 +30,7 @@ public class loginController implements Initializable {
     /**
      * Loads database during initalization
      */
-    private userDatabase database = new userDatabase("\\src\\Data\\Data.evdb");
+    private UserDatabase database = new UserDatabase("\\src\\Data\\UsrData.evdb");
 
     @Override
     public void initialize(URL location, ResourceBundle resourceBundle){
@@ -76,6 +75,8 @@ public class loginController implements Initializable {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
+        if ((username.equals("a"))&&(password.equals("a"))) return true; //JUST FOR TESTING PURPOSES USR: a, PASS: a //TODO DELETE AFTER
+
         if ((username.isEmpty()) &&  password.isEmpty()) {
             Warning.showAlert("Please enter your e-mail and password.");
             //wrongDataStyle(usernameField);
@@ -118,9 +119,7 @@ public class loginController implements Initializable {
         if (verifyInput()) {
             switch (database.isInDatabase(username,password)) {
                 case 0: {
-                    //openVotingApp();
-                    //TODO
-                    System.out.println("Succesfully Logged In");
+                    openVotingApp(username);
                     break;
                 }
                 case 1: {
@@ -156,10 +155,10 @@ public class loginController implements Initializable {
        }
    }
 
-   private void openVotingApp() {
+   private void openVotingApp(String username) {
        try{
            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../View/votingApp.fxml"));
-           fxmlLoader.setController(new votingController());
+           fxmlLoader.setController(new votingController(username));
            Parent root = (Parent) fxmlLoader.load();
            Stage currentStage = (Stage) logInButton.getScene().getWindow();
            Stage stage = new Stage();

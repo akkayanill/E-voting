@@ -8,30 +8,52 @@ import java.util.List;
 
 public class Voting {
     private String title;
-    private List<Poll> voting = new ArrayList<Poll>();
-    private int polls;
+    private int pollCounter;
+    private List<Poll> polls = new ArrayList<>();
+    private List<Integer> days = new ArrayList<>();
+
+
+    public Voting(String title,int pollCounter,List<Poll> polls,List<Integer> days){
+        this.title = title;
+        this.pollCounter = pollCounter;
+        this.polls = polls;
+        this.days = days;
+    }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public void setPolls(int polls) {
-        this.polls = polls;
+    public void setPollCounter(int pollCounter) {
+        this.pollCounter = pollCounter;
     }
 
-    public void setVoting(List<Poll> voting) {
-        this.voting = voting;
+    public void setPolls(List<Poll> polls) {
+        this.polls = polls;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public List<Poll> getVoting() {
-        return voting;
+    public List<Poll> getPolls() {
+        return polls;
     }
 
-    public int getPolls() {
-        return polls;
+    public int getPollCounter() {
+        return pollCounter;
+    }
+
+    public void setDayAvailable(int dayIndex) {
+        days.add(dayIndex);
+    }
+
+    public List<Integer> getDaysAvailable(){
+        return this.days;
+    }
+
+    public boolean isDayAvailable(int dayIndex){
+        if (days.contains(dayIndex)) return true;
+        else return false;
     }
 }

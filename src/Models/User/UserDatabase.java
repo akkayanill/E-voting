@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class userDatabase {
+public class UserDatabase {
     private String path;
     private List<String> database = new ArrayList<>();
     private List<User> users = new ArrayList<>();
 
-    public userDatabase(String path) {
+    public UserDatabase(String path) {
         String localDir = System.getProperty("user.dir");
         this.path = localDir + path;
     }
