@@ -17,19 +17,36 @@ public class Warning {
      * Shows an warning message in new stage using fxml
      */
     public static void showAlert(String message) {
-            try{
-                FXMLLoader fxmlLoader = new FXMLLoader(Warning.class.getResource("/View/warning.fxml"));
-                fxmlLoader.setController(new warningController(message));
-                Parent root = (Parent) fxmlLoader.load();
-                Stage stage = new Stage();
-                stage.initStyle(StageStyle.UNDECORATED);
-                stage.setTitle("Warning");
-                stage.setScene(new Scene(root));
-                stage.show();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Warning.class.getResource("/View/warning.fxml"));
+            fxmlLoader.setController(new warningController(message));
+            Parent root = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setTitle("Warning");
+            stage.setScene(new Scene(root));
+            stage.show();
 
-            } catch (IOException e){
-                e.printStackTrace();
-                System.out.println(e.getMessage());
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void showConfirmAlert(String message) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Warning.class.getResource("/View/confirmWarning.fxml"));
+            fxmlLoader.setController(new warningController(message));
+            Parent root = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setTitle("Please select your action.");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
     }
 }
