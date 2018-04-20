@@ -8,14 +8,22 @@ package Models.Voting;
 public class Poll {
     private String type;
     private String question;
-    private String[] choices = new String[2];
+    //private String[] choices = new String[2];
+    private String[] choices;
     private double[] stats = new double[2];
 
-
-    public Poll(String type,String question, String choice1,String choice2) {
+/*
+public Poll(String type,String question, String choice1,String choice2) {
         setType(type);
         setQuestion(question);
         setChoices(choice1,choice2);
+    }
+* */
+    public Poll(String type,String question, String... args) {
+        setType(type);
+        setQuestion(question);
+        setChoicesss(args);
+        //setChoices(choice1,choice2);
     }
 
     private void setType(String type){
@@ -24,10 +32,20 @@ public class Poll {
     private void setQuestion(String question){
         this.question = question;
     }
-    private void setChoices(String choice1,String choice2){
+
+    //
+    /*
+    private void setChoices(String choice1,String choice2) {
         choices[0] = choice1;
         choices[1] = choice2;
     }
+     */
+    private void setChoicesss(String... args) {
+        for(int i = 0; i < args.length; i++) {
+            choices[i] = args[i];
+        }
+    }
+
     public void setStats(double stat1,double stat2){
         stats[0] = stat1;
         stats[1] = stat2;

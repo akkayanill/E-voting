@@ -3,6 +3,8 @@ package Models.User;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.Scanner;
 
 public class UserDatabase {
@@ -44,7 +46,7 @@ public class UserDatabase {
     }
 
     public void loadDatabase() {
-        try {
+         try {
             File f = new File(this.getPath());
             Scanner sc = new Scanner(new FileReader(f));
             while (sc.hasNext()) {
@@ -53,6 +55,7 @@ public class UserDatabase {
         } catch (FileNotFoundException e) {
             System.out.println("Error loading DATABASE: File not found.");
         }
+
     }
 
     public void saveToFile() {
