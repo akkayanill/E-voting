@@ -36,7 +36,7 @@
                   <Font size="15.0" />
                </font>
             </JFXPasswordField>
-            <JFXCheckBox fx:id="accept" checkedColor="#2b5296" layoutX="34.0" layoutY="307.0" text="I have read and I agree to the" textFill="#bbbbbb" unCheckedColor="#bbbbbb" />
+            <JFXCheckBox fx:id="accept" checkedColor="#2b5296" layoutX="20.0" layoutY="307.0" text="I have read and I agree to the" textFill="#bbbbbb" unCheckedColor="#bbbbbb" />
             <JFXButton fx:id="signUpButton" layoutX="29.0" layoutY="349.0" onMouseClicked="#register" prefHeight="40.0" prefWidth="270.0" ripplerFill="WHITE" style="-fx-background-color: D46A2E;" text="Sign Up" textFill="#eeeeee">
                <font>
                   <Font name="System Bold" size="15.0" />
@@ -47,7 +47,7 @@
                   <Font size="14.0" />
                </font>
             </Hyperlink>
-            <Hyperlink layoutX="215.0" layoutY="305.0" text="Terms of Use" textFill="#d46a2e" />
+            <Hyperlink layoutX="224.0" layoutY="304.6" text="Terms of Use" onMouseClicked="#showTermsOfUse" textFill="#d46a2e" />
             <Label layoutX="92.0" layoutY="55.0" text="Create an account" textFill="#eeeeee">
                <font>
                   <Font size="18.0" />

@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.scene.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,7 +31,7 @@ public class loginController implements Initializable {
     /**
      * Loads database during initalization
      */
-    private UserDatabase database = new UserDatabase("\\src\\Data\\UsrData.evdb");
+    private UserDatabase database = new UserDatabase("/src/Data/UsrData.evdb");
 
     @Override
     public void initialize(URL location, ResourceBundle resourceBundle){
@@ -62,60 +63,58 @@ public class loginController implements Initializable {
      * Gets node and sets its style to red thick border
      * @param node name of the node
      */
- /*  private void wrongDataStyle(Node node){
-        node.setStyle("-fx-border-color: red;"+"-fx-border-width:2");
+   private void wrongDataStyle(Node node){
+        node.setStyle("-fx-border-color: red;" + "-fx-border-width:2");
      }
- */
+
 
     /**
      * Verifies input if TextFields are not empty and checks e-mail TextField for correct pattern.
      * @return true if both of the TextFields are empty and e-mail TextField contains one ampersand symbol and at least one dot.
      */
     private boolean verifyInput() {
+        registerController registerCntrllr = new registerController(database);
+        String errMessage = " ";
+        int i = 0;
         String username = usernameField.getText();
         String password = passwordField.getText();
 
         if ((username.equals("a"))&&(password.equals("a"))) return true; //JUST FOR TESTING PURPOSES USR: a, PASS: a //TODO DELETE AFTER
 
-        if ((username.isEmpty()) &&  password.isEmpty()) {
-            Warning.showAlert("Please enter your e-mail and password.");
-            //wrongDataStyle(usernameField);
-            //wrongDataStyle(passwordField);
-            return false;
+        if (username.isEmpty()) {
+            wrongDataStyle(usernameField);
+            i++;
+            errMessage = errMessage + i + "- : Please enter your e-mail.";
         }
 
-        else if (password.isEmpty()) {
-            Warning.showAlert("Please enter your password.");
-            //wrongDataStyle(passwordField);
-            return false;
+        if (password.isEmpty()) {
+            wrongDataStyle(passwordField);
+            i++;
+            errMessage = errMessage + "\n " + i + "- : Please enter your password.";
         }
 
-        else if (username.isEmpty()) {
-            Warning.showAlert("Please enter your e-mail.");
-            //wrongDataStyle(usernameField);
-            return false;
+        if(i == 0 && registerCntrllr.emailTypeChecker(username)) {
+            return true;
         }
-
         else {
-            if(((username.length() - username.replace("@","").length())==1) && ((username.length() - username.replace(".","").length())>=1)){
-                return true;
-            }
-            else {
-                Warning.showAlert("Invalid email adress!");
-                //wrongDataStyle(usernameField);
-                return false;
-            }
-
+            i++;
+            errMessage = errMessage + "\n " + i + "- : Invalid email adress!";
+            wrongDataStyle(usernameField);
+            Warning.showAlert(errMessage);
+            return false;
         }
+
     }
+
 
     /**
      * After loading credentials from TextFields, verifies if the username and password exists in the user database.
      */
+
     public void logIn() {
+
         String username = usernameField.getText();
         String password = passwordField.getText();
-
         if (verifyInput()) {
             switch (database.isInDatabase(username,password)) {
                 case 0: {
@@ -124,12 +123,12 @@ public class loginController implements Initializable {
                 }
                 case 1: {
                     Warning.showAlert("Invalid password!");
-                    //wrongDataStyle(passwordField);
+                    wrongDataStyle(passwordField);
                     break;
                 }
                 case 2: {
                     Warning.showAlert("Username not found.");
-                    //wrongDataStyle(usernameField);
+                    wrongDataStyle(usernameField);
                     break;
                 }
             }
@@ -145,7 +144,7 @@ public class loginController implements Initializable {
            fxmlLoader.setController(new registerController(database));
            Parent root = (Parent) fxmlLoader.load();
            Stage stage = (Stage) logInButton.getScene().getWindow();
-           stage.setTitle("E-vote - Create an Account in Evote");
+           stage.setTitle("E-vote - Create an Account in E-Vote");
            stage.setScene(new Scene(root));
            stage.show();
 
@@ -161,10 +160,11 @@ public class loginController implements Initializable {
            fxmlLoader.setController(new votingController(username));
            Parent root = (Parent) fxmlLoader.load();
            Stage currentStage = (Stage) logInButton.getScene().getWindow();
+
            Stage stage = new Stage();
            stage.initStyle(StageStyle.UNDECORATED);
            stage.setTitle("E-vote");
-           stage.setScene(new Scene(root,1024,768));
+           stage.setScene(new Scene(root, 1024,768));
            stage.show();
            currentStage.close();
 

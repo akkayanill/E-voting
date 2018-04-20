@@ -2,15 +2,11 @@ package Models.Other;
 
 public class Days {
     private int today;
-    private String[] days = { "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"  };
+    private String[] days = { "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday" };
 
-    public void setToday(int today) {
-        this.today = today;
-    }
+    public void setToday(int today) { this.today = today; }
 
-    public int getToday() {
-        return today;
-    }
+    public int getToday() { return today; }
 
     public String getTodayFullName() {
         return days[getToday()-1];

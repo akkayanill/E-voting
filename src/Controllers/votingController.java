@@ -127,8 +127,9 @@ public class votingController {
         setAvailability();
     }
 
-    public void closeApp(){
+    public void closeApp(){ //TODO
         Warning.showConfirmAlert("Do you really want to exit? You will be logged out automatically");
+        //System.exit(0);
     }
 
     public void logOut(){

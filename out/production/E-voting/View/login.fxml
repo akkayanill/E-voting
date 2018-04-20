@@ -47,12 +47,12 @@
             </Hyperlink>
          </children>
       </AnchorPane>
-      <Label layoutX="246.0" layoutY="144.0" text="E-" textFill="#d46a2e">
+      <Label layoutX="255.0" layoutY="144.0" text="E-" textFill="#d46a2e">
          <font>
             <Font size="31.0" />
          </font>
       </Label>
-      <Label layoutX="272.0" layoutY="144.0" text="vote" textFill="#d46a2e">
+      <Label layoutX="286.0" layoutY="144.0" text="vote" textFill="#d46a2e">
          <font>
             <Font size="31.0" />
          </font>
@@ -70,7 +70,8 @@
       <Label layoutX="83.0" layoutY="207.0" prefHeight="60.0" prefWidth="356.0" text="Create and publish your votings for free.  Let others vote ,&#10; collect statistics and use them.  &#10;&#10;" textFill="#bbbbbb">
          <font>
             <Font size="13.0" />
-         </font></Label>
+         </font>
+      </Label>
       <JFXButton fx:id="registerButton" layoutX="83.0" layoutY="285.0" onMouseClicked="#goToRegister" prefHeight="40.0" prefWidth="197.0" ripplerFill="WHITE" style="-fx-background-color: D46A2E;" text="Create an account" textFill="#eeeeee">
          <font>
             <Font name="System Bold" size="15.0" />

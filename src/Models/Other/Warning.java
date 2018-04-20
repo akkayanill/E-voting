@@ -32,6 +32,22 @@ public class Warning {
             System.out.println(e.getMessage());
         }
     }
+    public static void showAlerts(String messages) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Warning.class.getResource("/View/warning.fxml"));
+            fxmlLoader.setController(new warningController(messages));
+            Parent root = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setTitle("Warning");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+    }
 
     public static void showConfirmAlert(String message) {
         try {
