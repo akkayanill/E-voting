@@ -20,12 +20,12 @@
       <AnchorPane layoutX="-8.0" layoutY="411.0" prefHeight="95.0" prefWidth="908.0" style="-fx-background-color: bbb;" />
       <AnchorPane layoutX="513.0" layoutY="58.0" prefHeight="385.0" prefWidth="327.0" style="-fx-background-color: #2B5296;">
          <children>
-            <JFXTextField fx:id="usernameField" focusColor="#e4e4e4" layoutX="31.0" layoutY="107.0" onMouseClicked="#resetUsernameCSS" prefHeight="40.0" prefWidth="270.0" promptText="e-mail" unFocusColor="#bbbbbb">
+            <JFXTextField fx:id="usernameField" focusColor="#e4e4e4" layoutX="31.0" layoutY="107.0" prefHeight="40.0" prefWidth="270.0" promptText="e-mail" unFocusColor="#bbbbbb">
                <font>
                   <Font size="15.0" />
                </font>
             </JFXTextField>
-            <JFXPasswordField fx:id="passwordField" focusColor="#e4e4e4" layoutX="31.0" layoutY="184.0" onMouseClicked="#resetPasswordCSS" prefHeight="40.0" prefWidth="270.0" promptText="Password" unFocusColor="#bcbcbc">
+            <JFXPasswordField fx:id="passwordField" focusColor="#e4e4e4" layoutX="31.0" layoutY="184.0" prefHeight="40.0" prefWidth="270.0" promptText="Password" unFocusColor="#bcbcbc">
                <font>
                   <Font size="15.0" />
                </font>

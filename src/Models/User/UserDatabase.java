@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.Scanner;
 
 public class UserDatabase {
     private String path;
@@ -45,15 +44,29 @@ public class UserDatabase {
         users.add(tempUser);
     }
 
+    /**
+     * This method loads csv file into database of usernames and passwords
+     */
     public void loadDatabase() {
          try {
             File f = new File(this.getPath());
-            Scanner sc = new Scanner(new FileReader(f));
-            while (sc.hasNext()) {
-                users.add(new User(sc.next(), sc.next()));
+            BufferedReader rd = new BufferedReader( new FileReader(f));
+            String line = "";
+
+            while ((line = rd.readLine())!=null ){
+                 String[] credentials = line.split(";");
+                 for (int i = 0; i < 2; i++) {
+                     credentials[i] = credentials[i].substring(credentials[i].indexOf("\"") + 1, credentials[i].lastIndexOf("\""));
+                 }
+                 users.add(new User(credentials[0], credentials[1]));
             }
-        } catch (FileNotFoundException e) {
+
+        }
+        catch (FileNotFoundException e) {
             System.out.println("Error loading DATABASE: File not found.");
+        }
+        catch (IOException e){
+             System.err.println(e);
         }
 
     }
@@ -64,7 +77,7 @@ public class UserDatabase {
             BufferedWriter out = new BufferedWriter(new FileWriter(f));
 
             for (int i=0;i<users.size();i++) {
-                out.write(users.get(i).getEmail() + " " + users.get(i).getPassword());
+                out.write("\""+users.get(i).getEmail()+"\";\""+users.get(i).getPassword()+"\"");
                 out.newLine();
             }
 

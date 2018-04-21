@@ -19,6 +19,7 @@ public class warningController {
 
     @FXML Label warningLabel;
     private String warningMessage;
+    private int maxLabelSize = 0;
 
     /**
      * Sets warning message to Label in fxml
@@ -26,9 +27,17 @@ public class warningController {
     @FXML
     private void initialize() {
         warningLabel.setText(warningMessage);
+        if (maxLabelSize != 0) {
+            warningLabel.setMaxWidth(maxLabelSize);
+        }
     }
 
     public warningController(String message) {
+        warningMessage = message;
+    }
+
+    public warningController(String message,int maxLabelSize) {
+        this.maxLabelSize = maxLabelSize;
         warningMessage = message;
     }
 

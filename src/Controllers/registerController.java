@@ -32,6 +32,15 @@ public class registerController {
     private String password;
     private String confirmPassword;
 
+    private static final Pattern [] passwordRegex = new Pattern[3];
+    {
+        passwordRegex[0] = Pattern.compile(".*[A-Z].*");
+        passwordRegex[1] = Pattern.compile(".*[a-z].*");
+        passwordRegex[2] = Pattern.compile(".*\\d.*");
+    }
+
+    private static final  Pattern emailRegex = Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\."+"[a-" + "zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z" + "A-Z]{2,7}$");
+
     public registerController(UserDatabase database){
         this.database = database;
     }
@@ -41,14 +50,15 @@ public class registerController {
         password = passwordField.getText();
         confirmPassword = confirmPasswordField.getText();
     }
+
     /**
      * Closes Window by clicking on Label X
      */
     public void closeApp() { System.exit(0); }
-    private void wrongDataStyle(Node node){
-        node.setStyle("-fx-border-color: red;" + "-fx-border-width:2");
-    }
 
+    /**
+     * Goes back to login screen
+     */
     public void goToLogin() {
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/login.fxml"));
@@ -64,6 +74,9 @@ public class registerController {
         }
     }
 
+    /**
+     * Opens new scene with registration successful message
+     */
     public void registerSuccessful() {
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/registrationSuccessful.fxml"));
@@ -79,91 +92,113 @@ public class registerController {
         }
     }
 
+    /**
+     * In case of valid username & password, creates an account in database and saves it to file.
+     */
     public void register() {
         if (verifyInput()) {
-            if (!(database.isInDatabase(username))) {
-                database.addUser(username, password);
-                database.saveToFile();
-                registerSuccessful();
-            } else Warning.showAlert("There is already account with that e-mail address.");
+            database.addUser(username, password);
+            database.saveToFile();
+            registerSuccessful();
+
         }
     }
-    public boolean emailTypeChecker(String email) {
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
-                "[a-zA-Z0-9_+&*-]+)*@" +
-                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
-                "A-Z]{2,7}$";
 
-        Pattern pat = Pattern.compile(emailRegex);
+    /**
+     * Checks email address if it is valid, using regular expressions
+     * @param email String mail address
+     * @return boolean value if it is valid email address
+     */
+    public boolean emailTypeChecker(String email) {
+
         if (email == null)
             return false;
-        return pat.matcher(email).matches();
+        return emailRegex.matcher(email).matches();
     }
 
+    /**
+     * Checks password if it is valid, using regular expressions
+     * @param pass String password
+     * @return if password is valid according to regex
+     */
+    public boolean isLegalPassword(String pass) {
 
+        for(int i = 0; i < passwordRegex.length; i++){
+            if(!passwordRegex[i].matcher(pass).matches())
+                return false;
+        }
+        return true;
+    }
+
+    /**
+     * Shows terms of use
+     */
     public void showTermsOfUse() {
-        Warning.showAlert("1- : Registration: inform users that they must agree to a set of \n" + "rules when they register on your website or mobile app\n" +
-                "2: - Owner of content: notify users that you, is the \n" + "owner of the content appearing on your website except in cases where \n" + "other users can post content (share, create etc.) where the users are the owners of such content\n" +
-                "3: - Changes to the agreement: users should be informed about \n" + "upcoming changes to the agreement before the changes are applied.");
+
+        Warning.showAlert(
+                            "Terms of Use"
+                            +"\n\nLast updated April 21,2018. Replaces the prior version in its entirety."
+                            +"\n\nAny participation in this software will constitute acceptance of this agreement. If you do not agree to abide by the above, please do not use this software."
+                            +"\n\nYou grant E-voting and all other persons or entities involved in the operation of the software the right to transmit, monitor, retrieve, store, and use your information in connection with the software. E-voting cannot and does not assume any responsibility or liability for any information you submit, including to your Account."
+                            +"\n\nYou grant to E-voting the right to use all content you upload or otherwise transmit to this software, subject to these Terms and Conditions and E-voting’s Privacy Policy in any manner E-voting chooses, including, but not limited, to copying, displaying, performing or publishing it in any format whatsoever, modifying it, incorporating it into other material or making a derivative work based on it."
+                            +"\n\nE-voting may reject, refuse to post or delete any content for any or no reason"
+                            +"\n\nDevelopers may modify or amend terms without notice at any time and such modification will be effective upon posting by E-voting here."
+        ,800);
     }
+
     /**
      * Verifies input if TextFields are not empty and checks e-mail TextField for correct pattern.
      * @return true if both of the TextFields are empty and e-mail TextField contains one ampersand symbol and at least one dot.
      */
-
     private boolean verifyInput() {
-        String message = " ";
-        int i = 0;
         loadFields();
-/*
+
         if ((username.isEmpty()) &&  password.isEmpty() && confirmPassword.isEmpty()) {
-            wrongDataStyle(usernameField);
-            wrongDataStyle(passwordField);
-            i++;
-            message = message + i + "- : Please enter all information";
+           Warning.showAlert("Please enter all information");
+           return false;
         }
-*/
+
         if (username.isEmpty()) {
-            wrongDataStyle(usernameField);
-            i++;
-            message = message + "\n " + i + "- : Please enter your e-mail";
+            Warning.showAlert("Please enter your e-mail");
+            return false;
         }
+
+        if (!emailTypeChecker(username)) {
+            Warning.showAlert("Invalid e-mail adress");
+            return false;
+        }
+
+        if (database.isInDatabase(username)) {
+            Warning.showAlert("There is already account with that e-mail address.");
+            return false;
+        }
+
         if (password.isEmpty()) {
-            wrongDataStyle(passwordField);
-            i++;
-            message = message + "\n " + i + "- : Please enter your password";
+            Warning.showAlert("Please enter your password");
+            return false;
         }
-        if(password.length() < 8) {
-            wrongDataStyle(passwordField);
-            i++;
-            message = message + "\n " + i + "- : Password needs to be at least 8 characters long";
+
+        if (!isLegalPassword(password) || (password.length() < 8)){
+            Warning.showAlert("Password needs to be at least 8 characters long and contain at least one number, one lowercase and one uppercase letter.",650);
+            return false;
         }
+
         if (confirmPassword.isEmpty()) {
-            wrongDataStyle(confirmPasswordField);
-            i++;
-            message = message + "\n " + i + "- : Please confirm your password";
+            Warning.showAlert("Please confirm your password");
+            return false;
         }
+
         if (!(password.equals(confirmPassword))) {
-            wrongDataStyle(confirmPasswordField);
-            wrongDataStyle(passwordField);
-            i++;
-            message = message + "\n " + i + "- : Passwords does not match";
+            Warning.showAlert("Passwords does not match");
+            return false;
         }
+
         if (!accept.isSelected()) {
-            i++;
-            message = message + "\n " + i + "- : Please accept the terms of usage";
+            Warning.showAlert("Please agree with our Terms of Use");
+            return false;
         }
 
-        if(i == 0 && emailTypeChecker(username)){
-            return true;
-        } else {
-            i++;
-            message = message + "\n " + i + "- : Invalid email adress!";
-            Warning.showAlert(message);
-            wrongDataStyle(usernameField);
-        }
-
-    return false;
+        return true;
     }
 
 }

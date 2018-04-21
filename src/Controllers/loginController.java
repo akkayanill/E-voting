@@ -31,13 +31,12 @@ public class loginController implements Initializable {
     /**
      * Loads database during initalization
      */
-    private UserDatabase database = new UserDatabase("/src/Data/UsrData.evdb");
+    private UserDatabase database = new UserDatabase("/src/Data/UsrData.csv");
 
     @Override
     public void initialize(URL location, ResourceBundle resourceBundle){
         database.loadDatabase();
     }
-
 
     /**
      * Closes Window
@@ -46,71 +45,38 @@ public class loginController implements Initializable {
         System.exit(0);
     }
 
-
-    /**
-     * These two methods reset
-     */
-    public void resetUsernameCSS() {
-        usernameField.setStyle(null);
-    }
-
-    public void resetPasswordCSS() {
-        passwordField.setStyle(null);
-    }
-
-
-    /**
-     * Gets node and sets its style to red thick border
-     * @param node name of the node
-     */
-   private void wrongDataStyle(Node node){
-        node.setStyle("-fx-border-color: red;" + "-fx-border-width:2");
-     }
-
-
     /**
      * Verifies input if TextFields are not empty and checks e-mail TextField for correct pattern.
      * @return true if both of the TextFields are empty and e-mail TextField contains one ampersand symbol and at least one dot.
      */
     private boolean verifyInput() {
         registerController registerCntrllr = new registerController(database);
-        String errMessage = " ";
-        int i = 0;
         String username = usernameField.getText();
         String password = passwordField.getText();
 
         if ((username.equals("a"))&&(password.equals("a"))) return true; //JUST FOR TESTING PURPOSES USR: a, PASS: a //TODO DELETE AFTER
 
         if (username.isEmpty()) {
-            wrongDataStyle(usernameField);
-            i++;
-            errMessage = errMessage + i + "- : Please enter your e-mail.";
-        }
-
-        if (password.isEmpty()) {
-            wrongDataStyle(passwordField);
-            i++;
-            errMessage = errMessage + "\n " + i + "- : Please enter your password.";
-        }
-
-        if(i == 0 && registerCntrllr.emailTypeChecker(username)) {
-            return true;
-        }
-        else {
-            i++;
-            errMessage = errMessage + "\n " + i + "- : Invalid email adress!";
-            wrongDataStyle(usernameField);
-            Warning.showAlert(errMessage);
+            Warning.showAlert("Please enter your e-mail.");
             return false;
         }
 
-    }
+        if (password.isEmpty()) {
+            Warning.showAlert("Please enter your password.");
+            return false;
+        }
 
+        if(!registerCntrllr.emailTypeChecker(username)) {
+            Warning.showAlert("Invalid email adress!");
+            return false;
+        }
+
+        return true;
+    }
 
     /**
      * After loading credentials from TextFields, verifies if the username and password exists in the user database.
      */
-
     public void logIn() {
 
         String username = usernameField.getText();
@@ -123,12 +89,10 @@ public class loginController implements Initializable {
                 }
                 case 1: {
                     Warning.showAlert("Invalid password!");
-                    wrongDataStyle(passwordField);
                     break;
                 }
                 case 2: {
                     Warning.showAlert("Username not found.");
-                    wrongDataStyle(usernameField);
                     break;
                 }
             }

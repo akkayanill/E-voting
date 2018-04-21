@@ -1,5 +1,6 @@
 package Models.Voting;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,14 +11,16 @@ public class Voting {
     private String title;
     private int pollCounter;
     private List<Poll> polls = new ArrayList<>();
-    private List<Integer> days = new ArrayList<>();
+    private LocalDate dateFrom;
+    private LocalDate dateTo;
 
 
-    public Voting(String title,int pollCounter,List<Poll> polls,List<Integer> days){
+    public Voting(String title, int pollCounter, List<Poll> polls, LocalDate dateFrom, LocalDate dateTo){
         this.title = title;
         this.pollCounter = pollCounter;
         this.polls = polls;
-        this.days = days;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
     }
 
     public void setTitle(String title) {
@@ -32,6 +35,14 @@ public class Voting {
         this.polls = polls;
     }
 
+    public void setDateTo(LocalDate dateTo) {
+        this.dateTo = dateTo;
+    }
+
+    public void setDateFrom(LocalDate dateFrom) {
+        this.dateFrom = dateFrom;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -44,16 +55,11 @@ public class Voting {
         return pollCounter;
     }
 
-    public void setDayAvailable(int dayIndex) {
-        days.add(dayIndex);
+    public LocalDate getDateFrom() {
+        return dateFrom;
     }
 
-    public List<Integer> getDaysAvailable(){
-        return this.days;
-    }
-
-    public boolean isDayAvailable(int dayIndex){
-        if (days.contains(dayIndex)) return true;
-        else return false;
+    public LocalDate getDateTo() {
+        return dateTo;
     }
 }

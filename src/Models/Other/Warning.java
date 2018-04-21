@@ -32,10 +32,10 @@ public class Warning {
             System.out.println(e.getMessage());
         }
     }
-    public static void showAlerts(String messages) {
+     public static void showAlert(String messages,int maxLabelSize) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Warning.class.getResource("/View/warning.fxml"));
-            fxmlLoader.setController(new warningController(messages));
+            fxmlLoader.setController(new warningController(messages,maxLabelSize));
             Parent root = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
@@ -65,4 +65,5 @@ public class Warning {
             System.out.println(e.getMessage());
         }
     }
+
 }
