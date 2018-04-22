@@ -29,6 +29,15 @@ public class Voting {
         }
     }
 
+    public Voting(String title, int pollCounter, List<Poll> polls,LocalDate dateFrom, LocalDate dateTo){
+        this.title = title;
+        this.pollCounter = pollCounter;
+        this.polls = polls;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+    }
+
+
     public void replaceStats(Voting voting){
         this.voters = voting.voters;
         for (int i=0;i<this.polls.size();i++) {

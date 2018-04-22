@@ -32,10 +32,12 @@ public class PollDatabase {
                 LocalDate dateTo = LocalDate.parse(temp[2],format);
                 List<Poll> polls = new ArrayList<>();
                 String[] users = temp[4].split(":");
+
                 for (int i=5;i<temp.length;i+=6) {
                     polls.add(new Poll(temp[i], temp[i+1], temp[i+2], temp[i+3],Double.parseDouble(temp[i+4]),Double.parseDouble(temp[i+5])));
                 }
-                addVoting(new Voting(temp[0], Integer.parseInt(temp[3]), polls, users, dateFrom, dateTo));
+                if ( (users.length!=1) && (!users[0].equals("")) ) addVoting(new Voting(temp[0], Integer.parseInt(temp[3]), polls, users, dateFrom, dateTo));
+                else addVoting(new Voting(temp[0], Integer.parseInt(temp[3]), polls, dateFrom, dateTo));
             }
 
         }

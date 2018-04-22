@@ -4,14 +4,19 @@ import Models.Other.Warning;
 import Models.Voting.PollDatabase;
 import Models.Voting.Voting;
 import com.jfoenix.controls.JFXButton;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -33,6 +38,15 @@ public class votingPollController{
     Label questionCounter;
     @FXML
     JFXButton nextQuestion;
+    @FXML
+    BorderPane questionPane;
+    @FXML
+    BorderPane graphPane;
+    @FXML
+    PieChart graph;
+    @FXML
+    Label graphQuestion;
+
 
     Voting voting;
     String username;
@@ -57,6 +71,8 @@ public class votingPollController{
     }
 
     private void setUi(int poll){
+        graphPane.setVisible(false);
+        questionPane.setVisible(true);
         question.setText(voting.getPolls().get(poll).getQuestion());
         answer1.setText(voting.getPolls().get(poll).getChoices()[0]);
         answer2.setText(voting.getPolls().get(poll).getChoices()[1]);
@@ -73,24 +89,51 @@ public class votingPollController{
     }
 
     public void answer1(){
-        answer1.setVisible(false);
-        answer2.setVisible(false);
-        if ((pollCounter+1) == voting.getPollCounter()) {
-            nextQuestion.setText("End");
-            nextQuestion.setOnMouseClicked(event -> end());
-        }
-        nextQuestion.setVisible(true);
-
+        calculate(true);
+        results();
     }
 
     public void answer2(){
-        answer1.setVisible(false);
-        answer2.setVisible(false);
+        calculate(false);
+        results();
+    }
+
+    public void calculate(boolean choice){
+        int numOfVoters = voting.getVoterCount();
+        Double a = 0.0;
+        Double b = 0.0;
+        double voterPart;
+        if (numOfVoters!=0) {
+            voterPart = 100 / numOfVoters;
+            a = voting.getPolls().get(pollCounter).getStats()[0] / voterPart;
+            b = voting.getPolls().get(pollCounter).getStats()[1] / voterPart;
+        }
+        if (choice) a++;
+        else b++;
+        voterPart = 100 / ++numOfVoters;
+        voting.getPolls().get(pollCounter).setStats((a * voterPart), (b * voterPart));
+    }
+
+    public void results(){
+        graphQuestion.setText(voting.getPolls().get(pollCounter).getQuestion());
+        ObservableList<PieChart.Data> pieChartData =
+                FXCollections.observableArrayList(
+                        new PieChart.Data(voting.getPolls().get(pollCounter).getChoices()[0], voting.getPolls().get(pollCounter).getStats()[0]),
+                        new PieChart.Data(voting.getPolls().get(pollCounter).getChoices()[1], voting.getPolls().get(pollCounter).getStats()[1]));
+        graph.setData(pieChartData);
+        graph.setClockwise(false);
+        questionPane.setVisible(false);
+        graphPane.setVisible(true);
         if ((pollCounter+1) == voting.getPollCounter()) {
             nextQuestion.setText("End");
             nextQuestion.setOnMouseClicked(event -> end());
         }
         nextQuestion.setVisible(true);
+
+        final Label caption = new Label("");
+        caption.setTextFill(Color.DARKORANGE);
+        caption.setStyle("-fx-font: 24 arial;");
+
     }
 
     public void end(){
@@ -111,13 +154,6 @@ public class votingPollController{
             e.printStackTrace();
             System.out.println(e.getMessage());
         }
-    }
-
-
-    public void closeApp(){
-        Warning.showConfirmAlert("Do you really want to exit? You will be logged out automatically," +
-                " but your changes in this voting will be discarded." +
-                "If you wish to save your changes, please complete the voting first.");
     }
 
 }
