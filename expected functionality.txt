@@ -14,23 +14,23 @@ The program should -
 
 			-	Store their username password in external database (file) - DONE
 			-	Some kind of simple encryption  (MAYBE)
-			-	Check for credential standard when signing up (Password length, containing Uppercase Characters , Numbers) - HALFWAY DONE
+			-	Check for credential standard when signing up (Password length, containing Uppercase Characters , Numbers) - DONE
 		
 		- Login to the account
 			-	Check the username (e-mail) and password if it is already registered - DONE
 			-	Log in - DONE
 
 		- Basic statistics about the user
-			-  	How many votings has the user completed	
-			-   	How many of them he created	
+			-  	How many votings has the user completed	- DONE
+			-   	How many of them he created - DONE
 
 	Manage votings
 
 		-User can vote
-			-	After selecting the answer of the poll, simple statistics pop up - percentage of answers
+			-	After selecting the answer of the poll, simple statistics pop up - percentage of answers - DONE
 
-		-Users could list through votings  - HALFWAY DONE
-			-	Votings are stored in another database and loaded from file 
+		-Users could list through votings  - DONE
+			-	Votings are stored in another database and loaded from file - DONE
 		
 		-Users can create own votings
 			-	User can set the number of polls (questions)
@@ -40,7 +40,7 @@ The program should -
 		
 		-User can control time
 			- 	Some of the votings are day-restricted and available only on certain days - DONE
-			- 	After he gets to the end of the week - statistics - Simple things - how many votings were completed, how many were created
+			- 	After he gets to the end of the month - statistics - Simple things - how many votings were completed, how many were created - DONE
 
 
 

@@ -20,12 +20,12 @@
       </ImageView>
       <AnchorPane layoutY="713.0" prefHeight="55.0" prefWidth="1024.0" style="-fx-background-color: #262A30;">
          <children>
-            <Label layoutX="19.0" layoutY="17.0" text="Signed as :" textFill="#bbbbbb">
+            <Label layoutX="19.0" layoutY="17.0" onMouseClicked="#showAccountStatistics" text="Signed as :" textFill="#bbbbbb">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="account" layoutX="94.0" layoutY="17.0" text="example@example.com" textFill="#bbbbbb">
+            <Label fx:id="account" layoutX="94.0" layoutY="17.0" onMouseClicked="#showAccountStatistics" text="example@example.com" textFill="#bbbbbb">
                <font>
                   <Font name="System Bold Italic" size="14.0" />
                </font>
@@ -82,12 +82,12 @@
          <bottom>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="TOP_CENTER">
                <children>
-                  <JFXButton fx:id="answer1" alignment="CENTER" contentDisplay="CENTER" minHeight="40.0" minWidth="200.0" onMouseClicked="#answer1" style="-fx-background-color: #D46A2E;" text="The answer is TO BE" textAlignment="CENTER" textFill="#ebebeb" wrapText="true">
+                  <JFXButton fx:id="answer1" alignment="CENTER" contentDisplay="CENTER" minHeight="40.0" minWidth="200.0" onMouseClicked="#answer1" style="-fx-background-color: #2B5296;" text="The answer is TO BE" textAlignment="CENTER" textFill="#ebebeb" wrapText="true">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton fx:id="answer2" alignment="CENTER" contentDisplay="CENTER" minHeight="40.0" minWidth="200.0" onMouseClicked="#answer2" style="-fx-background-color: #D46A2E;" text="The answer is NOT TO FUCKING BE" textAlignment="CENTER" textFill="#ebebeb" wrapText="true">
+                  <JFXButton fx:id="answer2" alignment="CENTER" contentDisplay="CENTER" minHeight="40.0" minWidth="200.0" onMouseClicked="#answer2" style="-fx-background-color: #2B5296;" text="The answer is NOT TO FUCKING BE" textAlignment="CENTER" textFill="#ebebeb" wrapText="true">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>

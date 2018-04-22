@@ -39,6 +39,10 @@ public class TimeFlow {
             today = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         }
 
+        public void setDate(LocalDate date){
+            today = date;
+        }
+
 
 
 }

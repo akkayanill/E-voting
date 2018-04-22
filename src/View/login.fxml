@@ -30,7 +30,7 @@
                   <Font size="15.0" />
                </font>
             </JFXPasswordField>
-            <JFXButton fx:id="logInButton" layoutX="31.0" layoutY="273.0" onMouseClicked="#logIn" prefHeight="40.0" prefWidth="270.0" ripplerFill="WHITE" style="-fx-background-color: D46A2E;" text="Log In" textFill="#eeeeee">
+            <JFXButton fx:id="logInButton" defaultButton="true" layoutX="31.0" layoutY="273.0" onMouseClicked="#logIn" prefHeight="40.0" prefWidth="270.0" ripplerFill="WHITE" style="-fx-background-color: D46A2E;" text="Log In" textFill="#eeeeee">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>

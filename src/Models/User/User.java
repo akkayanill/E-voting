@@ -5,12 +5,15 @@ public class User {
     private String password;
     private int completedVotings;
     private int thisMonthVotings;
+    private int totalCreated;
+    private int thisMonthCreated;
 
-    User(String email, String password,int total) {
-        this.email = email;
-        this.password = password;
+    User(String email, String password,int total,int created) {
+        setEmail(email);
+        setPassword(password);
         setCompletedVotings(total);
         setThisMonthVotings(0);
+        setTotalCreated(created);
     }
 
     public User(String email){
@@ -23,6 +26,27 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setThisMonthCreated(int thisMonthCreated) {
+        this.thisMonthCreated = thisMonthCreated;
+    }
+
+    public void setTotalCreated(int totalCreated) {
+        this.totalCreated = totalCreated;
+    }
+
+    public void incCreated() {
+        thisMonthCreated++;
+        totalCreated++;
+    }
+
+    public int getThisMonthCreated() {
+        return thisMonthCreated;
+    }
+
+    public int getTotalCreated() {
+        return totalCreated;
     }
 
     public String getEmail() {

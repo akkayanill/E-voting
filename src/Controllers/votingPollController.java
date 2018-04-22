@@ -1,6 +1,8 @@
 package Controllers;
 
 import Models.Other.Warning;
+import Models.User.User;
+import Models.User.UserDatabase;
 import Models.Voting.PollDatabase;
 import Models.Voting.Voting;
 import com.jfoenix.controls.JFXButton;
@@ -14,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
@@ -21,6 +24,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class votingPollController{
 
@@ -48,26 +52,35 @@ public class votingPollController{
     Label graphQuestion;
 
 
-    Voting voting;
-    String username;
-    String date;
-    int pollCounter = 0;
-    int votingIndex;
+    private Voting voting;
+    private String date;
+    private int pollCounter = 0;
+    private int votingIndex;
+    private User currentUsr;
+    private UserDatabase database =new UserDatabase("/src/Data/UsrData.csv");
+    private LocalDate today;
 
 
 
-    public votingPollController(Voting voting,String username,String date,int index){
+
+
+    public votingPollController(Voting voting, String username, String date, int index, int thisMonth, LocalDate today){
         this.voting = voting;
-        this.username = username;
         this.date = date;
         this.votingIndex = index;
+        database.loadDatabase();
+        this.currentUsr = database.getUserByUserName(username);
+        currentUsr.setThisMonthVotings(thisMonth);
+        this.today = today;
     }
 
     @FXML
     private void initialize(){
-        account.setText(username);
+        account.setText(currentUsr.getEmail());
         dateLabel.setText("Today: "+date);
         setUi(pollCounter);
+        Tooltip tooltip = new Tooltip("Click to show more information about your account. ");
+        account.setTooltip(tooltip);
     }
 
     private void setUi(int poll){
@@ -82,6 +95,15 @@ public class votingPollController{
         answer2.setVisible(true);
     }
 
+    public void showAccountStatistics(){
+        String message = "Username/e-mail: "+currentUsr.getEmail()+"\n\n";
+        message += "If you forgot your password, please contact us by sending e-mail to frantisek.gic@gmail.com\n\n";
+        message += "Votings completed (this month): "+currentUsr.getThisMonthVotings()+"\n";
+        message += "Votings completed (total): "+currentUsr.getCompletedVotings()+"\n";
+        message += "Created own votings (this month): "+currentUsr.getThisMonthCreated()+"\n";
+        message += "Created own votings (total): "+currentUsr.getTotalCreated()+"\n";
+        Warning.showAlert(message,500);
+    }
 
     public void nextQuestion(){
         setUi(++pollCounter);
@@ -129,17 +151,12 @@ public class votingPollController{
             nextQuestion.setOnMouseClicked(event -> end());
         }
         nextQuestion.setVisible(true);
-
-        final Label caption = new Label("");
-        caption.setTextFill(Color.DARKORANGE);
-        caption.setStyle("-fx-font: 24 arial;");
-
     }
 
     public void end(){
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../View/votingSuccessful.fxml"));
-            fxmlLoader.setController(new votingSuccessfulController(voting,username,date,votingIndex));
+            fxmlLoader.setController(new votingSuccessfulController(voting,currentUsr.getEmail(),date,votingIndex,currentUsr.getThisMonthVotings(),today));
             Parent root = (Parent) fxmlLoader.load();
             Stage currentStage = (Stage) nextQuestion.getScene().getWindow();
 

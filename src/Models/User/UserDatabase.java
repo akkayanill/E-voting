@@ -51,7 +51,7 @@ public class UserDatabase {
     }
 
     public void addUser(String email,String password){
-        User tempUser = new User(email,password,0);
+        User tempUser = new User(email,password,0,0);
         users.add(tempUser);
     }
 
@@ -69,7 +69,7 @@ public class UserDatabase {
                  for (int i = 0; i < userData.length; i++) {
                      userData[i] = userData[i].substring(userData[i].indexOf("\"") + 1, userData[i].lastIndexOf("\""));
                  }
-                 users.add(new User(userData[0], userData[1],Integer.parseInt(userData[2])));
+                 users.add(new User(userData[0], userData[1],Integer.parseInt(userData[2]),Integer.parseInt(userData[3])));
             }
 
         }
@@ -88,7 +88,7 @@ public class UserDatabase {
             BufferedWriter out = new BufferedWriter(new FileWriter(f));
 
             for (int i=0;i<users.size();i++) {
-                out.write("\""+users.get(i).getEmail()+"\";\""+users.get(i).getPassword()+"\"");
+                out.write("\""+users.get(i).getEmail()+"\";\""+users.get(i).getPassword()+"\";\""+users.get(i).getCompletedVotings()+"\";\""+users.get(i).getThisMonthCreated()+"\"");
                 out.newLine();
             }
 
