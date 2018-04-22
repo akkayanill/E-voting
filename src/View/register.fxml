@@ -37,7 +37,7 @@
                </font>
             </JFXPasswordField>
             <JFXCheckBox fx:id="accept" checkedColor="#2b5296" layoutX="35.0" layoutY="305.0" text="I have read and I agree to the" textFill="#bbbbbb" unCheckedColor="#bbbbbb" />
-            <JFXButton fx:id="signUpButton" layoutX="29.0" layoutY="349.0" onMouseClicked="#register" prefHeight="40.0" prefWidth="270.0" ripplerFill="WHITE" style="-fx-background-color: D46A2E;" text="Sign Up" textFill="#eeeeee">
+            <JFXButton fx:id="signUpButton" defaultButton="true" layoutX="29.0" layoutY="349.0" onMouseClicked="#register" prefHeight="40.0" prefWidth="270.0" ripplerFill="WHITE" style="-fx-background-color: D46A2E;" text="Sign Up" textFill="#eeeeee">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>

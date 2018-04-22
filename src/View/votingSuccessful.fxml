@@ -20,12 +20,12 @@
       </ImageView>
       <AnchorPane layoutY="713.0" prefHeight="55.0" prefWidth="1024.0" style="-fx-background-color: #262A30;">
          <children>
-            <Label layoutX="19.0" layoutY="17.0" text="Signed as :" textFill="#bbbbbb">
+            <Label layoutX="19.0" layoutY="17.0" onMouseClicked="#showAccountStatistics" text="Signed as :" textFill="#bbbbbb">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="account" layoutX="94.0" layoutY="17.0" text="example@example.com" textFill="#bbbbbb">
+            <Label fx:id="account" layoutX="94.0" layoutY="17.0" onMouseClicked="#showAccountStatistics" text="example@example.com" textFill="#bbbbbb">
                <font>
                   <Font name="System Bold Italic" size="14.0" />
                </font>

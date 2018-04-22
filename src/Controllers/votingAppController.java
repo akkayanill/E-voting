@@ -15,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -58,14 +59,15 @@ public class votingAppController {
     }
 
 
-    public votingAppController(String username,Voting voting, int index){
+    public votingAppController(String username,Voting voting, int index,int thisMonth,LocalDate date){
         votings.loadDatabase();
         votings.getVoting(index).replaceStats(voting);
         votings.saveToFile();
 
+        timeFlow.setDate(date);
         database.loadDatabase();
         this.currentUsr = database.getUserByUserName(username);
-        currentUsr.addCompletedVoting();
+        currentUsr.setThisMonthVotings(thisMonth);
     }
     /**
      * Loads data on stage start
@@ -88,6 +90,9 @@ public class votingAppController {
         //filling labels
         totalPages = ((votings.size()-1) / 4)+1;
         nextPage();
+
+        Tooltip tooltip = new Tooltip("Click to show more information about your account. ");
+        account.setTooltip(tooltip);
 
     }
 
@@ -156,6 +161,7 @@ public class votingAppController {
                 if (checkIfAvailable((page * 4) + i)) {
                     pollButton.setDisable(false);
                     pollButton.setOpacity(1);
+
                 } else {
                     pollButton.setDisable(true);
                     pollButton.setOpacity(0.5);
@@ -185,20 +191,34 @@ public class votingAppController {
         dateLabel.setText("Today: " +timeFlow.toString());
         setAvailability();
         if (timeFlow.getDate().getMonthValue() > thisMonth){
+            String message = "It's a new month! New fresh start!\n\n";
             if (currentUsr.getThisMonthVotings() > 0) {
-                Warning.showAlert("It's a new month! New fresh start!\n\n"
-                                + "Last month you completed " + currentUsr.getThisMonthVotings() + " voting/s and totally you have completed "
-                                + currentUsr.getCompletedVotings() + " voting/s! \nKeep rockin'! "
-                        , 400);
+                 message+="Last month you completed " + currentUsr.getThisMonthVotings() + " voting/s and totally you have completed "
+                         + currentUsr.getCompletedVotings() + " voting/s! " +
+                         "\n Votings created this month: "+currentUsr.getThisMonthCreated()+"/"+currentUsr.getTotalCreated()+" (total)"
+                         +"\n\nKeep rockin'!";
             }
             else {
-                Warning.showAlert("It's a new month! New fresh start!\n\n"
-                                + "It's a pity, but you didn't complete any voting last month. \nThough, totally you have completed "
-                                + currentUsr.getCompletedVotings() + " voting/s! \nGood luck, and don't forget to vote :)"
-                        , 400);
+                    message+="It's a pity, but you didn't complete any voting last month. \nThough, totally you have completed " +
+                            + currentUsr.getCompletedVotings() + " voting/s!\n" +
+                            "Votings created this month: "+currentUsr.getThisMonthCreated()+"/"+currentUsr.getTotalCreated()+" (total)"
+                            +"\n\nGood luck, and don't forget to vote :)";
+
             }
+            Warning.showAlert(message,400);
             currentUsr.setThisMonthVotings(0);
+            currentUsr.setThisMonthCreated(0);
         }
+    }
+
+    public void showAccountStatistics(){
+        String message = "Username/e-mail: "+currentUsr.getEmail()+"\n\n";
+        message += "If you forgot your password, please contact us by sending e-mail to frantisek.gic@gmail.com\n\n";
+        message += "Votings completed (this month): "+currentUsr.getThisMonthVotings()+"\n";
+        message += "Votings completed (total): "+currentUsr.getCompletedVotings()+"\n";
+        message += "Created own votings (this month): "+currentUsr.getThisMonthCreated()+"\n";
+        message += "Created own votings (total): "+currentUsr.getTotalCreated()+"\n";
+        Warning.showAlert(message,500);
     }
 
     public void closeApp(){
@@ -229,7 +249,7 @@ public class votingAppController {
         if (!( votings.getVoting(index).votedAlready(currentUsr.getEmail()) )) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../View/votingPoll.fxml"));
-                fxmlLoader.setController(new votingPollController(votings.getVoting(index), currentUsr.getEmail(), timeFlow.toString(),index));
+                fxmlLoader.setController(new votingPollController(votings.getVoting(index), currentUsr.getEmail(), timeFlow.toString(),index,currentUsr.getThisMonthVotings(),timeFlow.getDate()));
                 Parent root = (Parent) fxmlLoader.load();
                 Stage currentStage = (Stage) pollButton1.getScene().getWindow();
 
@@ -249,6 +269,11 @@ public class votingAppController {
             Warning.showAlert("You already completed this voting. One user may vote for each voting only once.");
             return;
         }
+
+    }
+
+    public void createVoting(){
+        System.out.println("created");  //TODO
     }
 
 
