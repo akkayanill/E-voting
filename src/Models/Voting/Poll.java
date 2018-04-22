@@ -12,10 +12,11 @@ public class Poll {
     private double[] stats = new double[2];
 
 
-    public Poll(String type,String question, String choice1,String choice2) {
+    public Poll(String type,String question, String choice1,String choice2,double stat1, double stat2) {
         setType(type);
         setQuestion(question);
         setChoices(choice1,choice2);
+        setStats(stat1,stat2);
     }
 
 
@@ -36,6 +37,12 @@ public class Poll {
     public void setStats(double stat1,double stat2){
         stats[0] = stat1;
         stats[1] = stat2;
+    }
+
+    public void setStats(double[] stats){
+        for (int i=0;i<stats.length;i++){
+            this.stats=stats;
+        }
     }
 
 

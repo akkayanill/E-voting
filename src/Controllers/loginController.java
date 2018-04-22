@@ -12,7 +12,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.scene.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -121,7 +120,7 @@ public class loginController implements Initializable {
    private void openVotingApp(String username) {
        try{
            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../View/votingApp.fxml"));
-           fxmlLoader.setController(new votingController(username));
+           fxmlLoader.setController(new votingAppController(username));
            Parent root = (Parent) fxmlLoader.load();
            Stage currentStage = (Stage) logInButton.getScene().getWindow();
 

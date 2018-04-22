@@ -31,10 +31,11 @@ public class PollDatabase {
                 LocalDate dateFrom = LocalDate.parse(temp[1],format);
                 LocalDate dateTo = LocalDate.parse(temp[2],format);
                 List<Poll> polls = new ArrayList<>();
-                for (int i=4;i<temp.length;i+=4) {
-                    polls.add(new Poll(temp[i], temp[i+1], temp[i+2], temp[i+3]));
+                String[] users = temp[4].split(":");
+                for (int i=5;i<temp.length;i+=6) {
+                    polls.add(new Poll(temp[i], temp[i+1], temp[i+2], temp[i+3],Double.parseDouble(temp[i+4]),Double.parseDouble(temp[i+5])));
                 }
-                addVoting(new Voting(temp[0], Integer.parseInt(temp[3]), polls, dateFrom, dateTo));
+                addVoting(new Voting(temp[0], Integer.parseInt(temp[3]), polls, users, dateFrom, dateTo));
             }
 
         }
@@ -52,9 +53,15 @@ public class PollDatabase {
             BufferedWriter out = new BufferedWriter(new FileWriter(f));
 
             for (int i=0;i<votings.size();i++) {
-                out.write("\""+votings.get(i).getTitle()+"\";\""+votings.get(i).getDateFrom().format(format)+"\";\""+votings.get(i).getDateTo().format(format)+"\";\""+votings.get(i).getPollCounter()+"\";");
+                out.write("\""+votings.get(i).getTitle()+"\";\""+votings.get(i).getDateFrom().format(format)+"\";\""+votings.get(i).getDateTo().format(format)+"\";\""+votings.get(i).getPollCounter()+"\";\"");
+                for (int j=0;j<votings.get(i).getVoters().size();j++){
+                    if (!(votings.get(i).getVoters().isEmpty())) out.write(votings.get(i).getVoters().get(j).getEmail()+":");
+                }
+                out.write("\"");
                 for (int j=0;j<votings.get(i).getPollCounter();j++) {
-                    out.write("\""+votings.get(i).getPolls().get(j).getType()+"\";\""+votings.get(i).getPolls().get(j).getQuestion()+"\";\""+votings.get(i).getPolls().get(j).getChoices()[0]+"\";\""+votings.get(i).getPolls().get(j).getChoices()[1]+"\"");
+                    out.write(";\""+votings.get(i).getPolls().get(j).getType()+"\";\""+votings.get(i).getPolls().get(j).getQuestion()
+                                +"\";\""+votings.get(i).getPolls().get(j).getChoices()[0]+"\";\""+votings.get(i).getPolls().get(j).getChoices()[1]
+                                +"\";\""+votings.get(i).getPolls().get(j).getStats()[0]+"\";\""+votings.get(i).getPolls().get(j).getStats()[1]+"\"");
                 }
                 out.newLine();
             }

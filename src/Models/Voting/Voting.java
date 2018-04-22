@@ -1,5 +1,7 @@
 package Models.Voting;
 
+import Models.User.User;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +15,25 @@ public class Voting {
     private List<Poll> polls = new ArrayList<>();
     private LocalDate dateFrom;
     private LocalDate dateTo;
+    private List<User> voters = new ArrayList<>();
 
 
-    public Voting(String title, int pollCounter, List<Poll> polls, LocalDate dateFrom, LocalDate dateTo){
+    public Voting(String title, int pollCounter, List<Poll> polls, String[] users,LocalDate dateFrom, LocalDate dateTo){
         this.title = title;
         this.pollCounter = pollCounter;
         this.polls = polls;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
+        for (int i=0;i<users.length;i++){
+            addVoter(users[i]);
+        }
+    }
+
+    public void replaceStats(Voting voting){
+        this.voters = voting.voters;
+        for (int i=0;i<this.polls.size();i++) {
+            this.polls.get(i).setStats(voting.polls.get(i).getStats());
+        }
     }
 
     public void setTitle(String title) {
@@ -43,7 +56,7 @@ public class Voting {
         this.dateFrom = dateFrom;
     }
 
-    public String getTitle() {
+     public String getTitle() {
         return title;
     }
 
@@ -61,5 +74,26 @@ public class Voting {
 
     public LocalDate getDateTo() {
         return dateTo;
+    }
+
+    public int getVoterCount() {
+        return voters.size();
+    }
+
+    public boolean votedAlready(String username){
+        if (username.equals("a")) return false;     //TODO REMOVE TESTING PURPOSES ONLY
+        for (int i=0;i<voters.size();i++){
+            if (voters.get(i).getEmail().equals(username)) return true;
+        }
+        return false;
+    }
+
+    public void addVoter(String username){
+        User tempUser = new User(username);
+        voters.add(tempUser);
+    }
+
+    public List<User> getVoters(){
+        return voters;
     }
 }

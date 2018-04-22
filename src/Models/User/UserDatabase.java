@@ -20,6 +20,17 @@ public class UserDatabase {
         return path;
     }
 
+    public User getUserByUserName(String email){
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getEmail().equals(email)) {
+                return users.get(i);
+            }
+        }
+            System.out.println("NOBODY FOUND with name "+email);
+            return null;
+    }
+
+
     public int isInDatabase(String email, String password) {
         for (int i = 0; i < users.size(); i++) {
             if (users.get(i).getEmail().equals(email)) {
@@ -40,7 +51,7 @@ public class UserDatabase {
     }
 
     public void addUser(String email,String password){
-        User tempUser = new User(email,password);
+        User tempUser = new User(email,password,0);
         users.add(tempUser);
     }
 
@@ -54,11 +65,11 @@ public class UserDatabase {
             String line = "";
 
             while ((line = rd.readLine())!=null ){
-                 String[] credentials = line.split(";");
-                 for (int i = 0; i < 2; i++) {
-                     credentials[i] = credentials[i].substring(credentials[i].indexOf("\"") + 1, credentials[i].lastIndexOf("\""));
+                 String[] userData = line.split(";");
+                 for (int i = 0; i < userData.length; i++) {
+                     userData[i] = userData[i].substring(userData[i].indexOf("\"") + 1, userData[i].lastIndexOf("\""));
                  }
-                 users.add(new User(credentials[0], credentials[1]));
+                 users.add(new User(userData[0], userData[1],Integer.parseInt(userData[2])));
             }
 
         }
