@@ -43,7 +43,7 @@ public class votingSuccessfulController {
         account.setText(username);
         dateLabel.setText("Today: "+date);
         votingTitle.setText("You have successfully completed "+voting.getTitle()+" voting!");
-        voterCount.setText("You and "+(voting.getVoterCount()-1)+" other voters already voted.");
+        voterCount.setText("You and "+voting.getVoterCount()+" other voters already voted.");
         voting.addVoter(username);
     }
 
